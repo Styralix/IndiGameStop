@@ -1,0 +1,27 @@
+body {
+
+    background-color: #efefef;
+}
+
+.box {
+    margin-top: 20px;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 400px;
+
+}
+
+.blog-post {
+    margin-top: 20px;
+    float: left;
+}
+
+.blog-heading {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.sidebar {
+    float: right;
+}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_content %}
+
+    <link rel="stylesheet" href="{% static 'css/css_post.css' %}"/>
+
+
+    <article class="style-article">
+        {% if posts %}
+            <h1 class="text-style-h1">Community Posts</h1>
+        {% else %}
+            <h1 class="text-style-h1">No Posts At The Moment</h1>
+        {% endif %}
+    </article>
+
+    <hr>
+
+    {% for post in posts %}
+        <div class="box">
+            <div class="blog-post">
+                <div class="blog-heading">
+                    {{ post.title }}
+                </div>
+                <div class="blog-body">
+                    {{ post.body }}
+
+                </div>
+            </div>
+            <div class="sidebar">
+                <div>
+                    <p>
+                        Posted On: {{ post.date_added }}
+                    </p>
+
+                    <p>
+                        Author: {{ post.user.username }}
+                    </p>
+                    {% if request.user.is_authenticated %}
+                        {% if post.user.id == user.id %}
+                            <a class="btn btn-primary" href="{% url 'edit post' post.id %}">Edit</a>
+                            <a class="btn btn-primary" href="{% url 'delete post' post.id %}">Delete</a>
+                        {% endif %}
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+        <hr>
+    {% endfor %}
+
+{% endblock %}

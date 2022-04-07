@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_content %}
+
+    <link rel="stylesheet" href="{% static 'css/css_profile_details.css' %}"/>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js">
+
+
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                {% if profile.profile_picture.url %}
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5"
+                         width="150px"
+                         src="{{ profile.profile_picture.url }}"><span
+                {% else %}
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5"
+                         width="150px"
+                         src="{% static 'img/profile_pic_def.jpg' %}"><span
+
+                {% endif %}
+                class="font-weight-bold">{{ profile.first_name }} {{ profile.last_name }}</span><span
+                    class="text-black-50">{{ profile.email }}</span><span> </span></div>
+                </div>
+                <div class="col-md-5 border-right">
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-right">Profile Details</h4>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6"><label class="labels">First Name</label><input type="text"
+                                                                                                 class="form-control"
+                                                                                                 disabled
+                                                                                                 value="{{ profile.first_name }}">
+                            </div>
+                            <div class="col-md-6"><label class="labels">Last Name</label><input type="text"
+                                                                                                class="form-control"
+                                                                                                value="{{ profile.last_name }}"
+                                                                                                disabled>
+
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12"><label class="labels">Username</label><input type="text"
+                                                                                                class="form-control"
+                                                                                                disabled
+                                                                                                value="{{ profile.username }}">
+                            </div>
+                            <div class="col-md-12"><label class="labels">Gender</label><input type="text"
+                                                                                              class="form-control"
+                                                                                              disabled
+                                                                                              value="{{ profile.gender }}">
+                            </div>
+
+                            <div class="col-md-12"><label class="labels">Description</label><input type="text"
+                                                                                                   class="form-control"
+                                                                                                   placeholder="Click on Edit to add a description"
+                                                                                                   disabled
+                                                                                                    {% if profile.description %}
+                                                                                                   value="{{ profile.description }}">
+                                                                                                    {% else %}
+                                                                                                    value="">
+                                                                                                    {% endif %}
+
+                            </div>
+
+                        </div>
+
+                        <div class="mt-5 text-center">
+                            {% if request.user.is_authenticated %}
+                            <a class="btn btn-primary profile-button" href="{% url 'edit profile' profile.pk %}" type="button">Edit</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <!--
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center experience">
+                            <span>More Info</span><span class="border px-3 p-1 add-experience"><i>
+
+                        </div>
+
+                        <br>
+                        <div class="col-md-12"><label class="labels">Your Games</label><input type="text"
+                                                                                              class="form-control"
+                                                                                              disabled
+                                                                                              value=""></div>
+                                                                                              -->
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

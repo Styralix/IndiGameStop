@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_content %}
+
+    <link rel="stylesheet" href="{% static 'css/css_delete_details.css' %}"/>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js">
+
+
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
+                                                                                             width="150px"
+                                                                                             src="{{ game.picture.url }}"><span
+                        class="font-weight-bold">{{ game.title }}</span><span
+                        class="text-black-50"></span><span> </span></div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Game Details</h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">Developer</label><input type="text"
+                                                                                            class="form-control"
+                                                                                            disabled
+                                                                                            value="{{ game.user.username }}">
+                        </div>
+                        <div class="col-md-6"><label class="labels">Title</label><input type="text"
+                                                                                        class="form-control"
+                                                                                        value="{{ game.title }}"
+                                                                                        disabled
+                                                                                        placeholder="surname">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Release Date</label><input type="text"
+                                                                                                class="form-control"
+                                                                                                disabled
+                                                                                                placeholder="enter phone number"
+                                                                                                value="{{ game.release_date }}">
+                        </div>
+                        <div class="col-md-12"><label class="labels">Download Link</label><input type="text"
+                                                                                                 class="form-control"
+                                                                                                 disabled
+                                                                                                 value="{{ game.download_link }}">
+                        </div>
+
+
+                        <div class="col-md-12"><label class="labels">Description</label><input type="text"
+                                                                                               class="form-control"
+                                                                                               disabled
+                                                                                               value="{{ game.description }}">
+                        </div>
+
+                        <div class="col-md-12"><label class="labels">Type</label><input type="text"
+                                                                                        class="form-control"
+                                                                                        disabled
+                                                                                        value="{{ game.type }}"></div>
+
+                        <div class="mt-5 text-center">
+                            {% if request.user.is_authenticated %}
+                                {% if game.user.id == user.id %}
+                                    <a class="btn btn-primary" href="{% url 'edit game' game.id %}">Edit Game</a>
+                                    <a class="btn btn-danger" href="{% url 'delete game' game.id %}">Delete</a>
+                                {% endif %}
+                                <hr>
+                                <form method="post" action="{% url 'like game' game.pk %}">
+                                    {% csrf_token %}
+
+                                    {% if not liked %}
+
+                                        <button class="btn btn-primary btn-sm" type="submit" name="game_id"
+                                                value="{{ game.id }}">Like
+                                        </button>
+
+                                    {% else %}
+
+                                        <button class="btn btn-danger btn-sm" type="submit" name="game_id"
+                                                value="{{ game.id }}">Unlike
+                                        </button>
+
+                                    {% endif %}
+
+
+                                </form>
+
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+
+
+                        {% if post_comments %}
+                            <h4 class="text-left">Comments</h4>
+                        {% else %}
+                            <h4 class="text-left">No Comments Yet...</h4>
+                        {% endif %}
+                        {% for comment in post_comments %}
+
+                            <div class="col-md-12"><label class="labels">User: {{ comment.user.username }} |
+                                Date: {{ comment.date }}</label><input type="text"
+                                                                       class="form-control"
+                                                                       disabled
+                                                                       value="{{ comment.content }}">
+                                <a style="float: right" class="btn btn-danger"
+                                   href={% url 'delete comment' comment.pk %}>Delete</a>
+                            </div>
+
+                        {% endfor %}
+
+
+                    </div>
+                    <div class=" row mt-3">
+
+
+                    </div>
+                    <div class="mt-5 text-center">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience">
+
+                        <span>More Info</span><span class="border px-3 p-1 add-experience"></span>
+
+                    </div>
+
+                    <br>
+
+                    <div class="col-md-12"><label class="labels">Total Likes</label><input type="text"
+                                                                                           class="form-control"
+                                                                                           placeholder="experience"
+                                                                                           disabled
+                                                                                           value="Likes: {{ total_likes }}">
+                    </div>
+                    <br>
+
+                    {% if request.user.is_authenticated %}
+
+                        <form method="post" action="{% url 'game details' game.id %}">
+                        <h4 class="text-left">Add A Comment</h4>
+                        <div>
+
+                            {{ form }}
+                            {% csrf_token %}
+
+                        </div>
+
+                        <button class="btn btn-primary" type="submit">Post</button>
+
+                    {% endif %}
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+{% endblock %}

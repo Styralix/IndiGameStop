@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    {% load static %}
+
+    {% if request.user.is_authenticated %}
+
+        <div class="logo-section">
+            <img style="" class="center logo-image" src="{% static 'img/martin_logo.png' %}" alt="">
+
+            <article class="style-article">
+                {% if games %}
+                    <h1 class="text-style-h1">My Games</h1>
+                {% else %}
+                    <h1 class="text-style-h1">You have not posted any games yet</h1>
+                {% endif %}
+            </article>
+
+        </div>
+
+
+        <section class="card-section">
+
+
+            <div class="container center">
+
+                {% for game in games %}
+                    <div class="card">
+                        <div class="card-header">
+                            {% if game.picture %}
+                                <img src="{{ game.picture.url }}" alt="rover"/>
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <span class="tag tag-teal">{{ game.type }}</span>
+                            <h4>
+                                {{ game.title }}
+                            </h4>
+                            <p>
+                                {{ game.description }}
+                            </p>
+                            <div class="user">
+
+                                <div class="user-info">
+                                    <h5>{{ game.user.username }} </h5>
+                                    <small>{{ game.release_date }}</small>
+                                    <a class="btn btn-primary profile-button"
+                                       href="{% url 'game details' game.id %}">
+                                        Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </section>
+    {% else %}
+        <h4>You are not logged in</h4>
+
+    {% endif %}
+{% endblock %}
