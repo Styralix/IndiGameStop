@@ -21,6 +21,12 @@ class CreateGameForm(forms.ModelForm):
     class Meta:
         model = Game
         fields = ('title', 'picture', 'description', 'type', 'release_date', 'download_link',)
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Game name'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Short description of the game'}),
+            'release_date': forms.DateInput(attrs={'placeholder': 'Year-Month-Day'}),
+            'download_link': forms.URLInput(attrs={'placeholder': 'Download link'}),
+        }
 
 
 class CreatePostForm(forms.ModelForm):
@@ -40,6 +46,11 @@ class CreatePostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('title', 'body')
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Post name'}),
+            'body': forms.Textarea(attrs={'placeholder': 'What is on your mind?'}),
+        }
+
 
 
 class CommentForm(forms.ModelForm):
