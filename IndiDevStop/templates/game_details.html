@@ -108,8 +108,12 @@
                                                                        class="form-control"
                                                                        disabled
                                                                        value="{{ comment.content }}">
-                                <a style="float: right" class="btn btn-danger"
-                                   href={% url 'delete comment' comment.pk %}>Delete</a>
+                                {% if request.user.is_authenticated %}
+                                    {% if comment.user.id == user.id %}
+                                        <a style="float: right" class="btn btn-danger"
+                                           href={% url 'delete comment' comment.pk %}>Delete</a>
+                                    {% endif %}
+                                {% endif %}
                             </div>
 
                         {% endfor %}
